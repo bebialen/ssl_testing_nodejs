@@ -1,25 +1,19 @@
 const https = require('https');
 const fs = require('fs');
 
-// Load the self-signed certificate and private key
-const options = {
-  key: fs.readFileSync('key.pem'), // Private key
-  cert: fs.readFileSync('cert.pem'), // Certificate
-};
+
 
 // Create an HTTPS server
-https.createServer(options, (req, res) => {
-  // Respond to requests with a success message
-  if (req.method === 'GET' && req.url === '/') {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('Hello from the server!');
-  } else {
-    res.writeHead(404, { 'Content-Type': 'text/plain' });
-    res.end('Not Found');
+export default function handler(req, res) {
+    if (req.method === 'GET' && req.url === '/') {
+      // Respond to GET requests
+      res.status(200).send('Hello from the server!');
+    } else {
+      // Handle other requests or not found
+      res.status(404).send('Not Found');
+    }
   }
-}).listen(34534, () => {
-  console.log('Server running at https://127.0.0.1:34534/');
-});
+  
 
 
 
